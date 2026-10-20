@@ -40,6 +40,7 @@ describe('debounce', () => {
     vi.advanceTimersByTime(1000);
 
     expect(fn).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledWith('search', 6);
   });
 
   it('restarts the timer on each call', () => {
