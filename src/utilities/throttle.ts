@@ -3,14 +3,28 @@ export function throttle<A extends unknown[]>(
   delay: number,
 ) {
   let isCoolingDown = false;
+  let pendingArgs: A | null = null;
 
-  return function (...args: A) {
-    if (isCoolingDown) return;
-
-    fn(...args);
+  function startCoolDown() {
     isCoolingDown = true;
     setTimeout(() => {
-      isCoolingDown = false;
+      if (pendingArgs) {
+        fn(...pendingArgs);
+        pendingArgs = null;
+        startCoolDown();
+      } else {
+        isCoolingDown = false;
+      }
     }, delay);
+  }
+
+  return function (...args: A) {
+    if (isCoolingDown) {
+      pendingArgs = args;
+      return;
+    };
+
+    fn(...args);
+    startCoolDown();
   };
 }

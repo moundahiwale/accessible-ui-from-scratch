@@ -41,13 +41,17 @@ describe('throttle', () => {
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
-  it('passes args to fn', () => {
+  it('remembers args from the trailing call and runs the fn', () => {
     const fn = vi.fn();
     const throttled = throttle(fn, 1000);
 
     throttled('a', 1);
-
     expect(fn).toHaveBeenCalledTimes(1);
-    expect(fn).toHaveBeenCalledWith('a', 1);
+
+    throttled('aa', 11);
+    throttled('aaa', 111);
+
+    vi.advanceTimersByTime(1000);
+    expect(fn).toHaveBeenNthCalledWith(2, 'aaa', 111);
   });
 });
