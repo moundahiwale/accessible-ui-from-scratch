@@ -57,4 +57,19 @@ describe('debounce', () => {
     vi.advanceTimersByTime(400);
     expect(fn).toHaveBeenCalledTimes(1);
   });
+
+  it('cancels a pending call and still works afterwards', () => {
+    const fn = vi.fn();
+    const debounced = debounce(fn, 1000);
+
+    debounced();
+    debounced.cancel();
+    vi.advanceTimersByTime(1000);
+
+    expect(fn).not.toHaveBeenCalled();
+
+    debounced();
+    vi.advanceTimersByTime(1000);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
 });

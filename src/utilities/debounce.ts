@@ -4,10 +4,16 @@ export function debounce<A extends unknown[]>(
 ) {
   let timerId: ReturnType<typeof setTimeout> | undefined;
   
-  return function (...args: A) {
+  const debounced = function (...args: A) {
     clearTimeout(timerId)
     timerId = setTimeout(() => {
       fn(...args);
     }, delay);
   };
+
+  debounced.cancel = () => {
+    clearTimeout(timerId);
+  }
+
+  return debounced;
 }

@@ -54,4 +54,30 @@ describe('throttle', () => {
     vi.advanceTimersByTime(1000);
     expect(fn).toHaveBeenNthCalledWith(2, 'aaa', 111);
   });
+
+  it('does not make trailing call when there were no calls during the cool down', () => {
+    const fn = vi.fn();
+    const throttled = throttle(fn, 1000);
+
+    throttled('a', 1);
+    vi.advanceTimersByTime(5000);
+
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('starts a new cool-down after the trailing call', () => {
+    const fn = vi.fn();
+    const throttled = throttle(fn, 1000);
+
+    throttled('a', 1);
+    throttled('b', 2);
+    vi.advanceTimersByTime(1000);
+    expect(fn).toHaveBeenNthCalledWith(2, 'b', 2);
+
+    throttled('c', 3);
+    expect(fn).toHaveBeenCalledTimes(2);
+
+    vi.advanceTimersByTime(1000);
+    expect(fn).toHaveBeenNthCalledWith(3, 'c', 3);
+  })
 });

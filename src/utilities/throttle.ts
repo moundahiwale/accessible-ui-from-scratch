@@ -22,7 +22,7 @@ export function throttle<A extends unknown[]>(
     if (isCoolingDown) {
       pendingArgs = args;
       return;
-    };
+    }
 
     fn(...args);
     startCoolDown();
