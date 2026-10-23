@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4        # 1. download your repo
+      - uses: actions/setup-node@v4      # 2. install Node
+        with:
+          node-version: 22
+          cache: npm                     #    speeds up later runs
+      - run: npm ci                      # 3. install dependencies from package-lock.json
+      - run: npx vitest run              # 4. run tests once (not watch mode)
+      - run: npm run build               # 5. type-check (tsc) + build, so type errors fail CI too
