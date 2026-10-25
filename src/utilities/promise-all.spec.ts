@@ -40,7 +40,7 @@ describe('promiseAll', () => {
   });
 
   it('matches the native Promise.all', async () => {
-    const make = () => [delay(20, 'x'), 5, delay(5, 'y')];
+    const make = () => [delay(20, 'x'), 'z', delay(5, 'y')];
     expect(await promiseAll(make())).toEqual(await Promise.all(make()));
   });
 });
