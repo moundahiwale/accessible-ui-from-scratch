@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion demo</title>
+    <script type="module" src="./accordion.ts"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Accordion demo</h1>
+      <div class="accordion">
+        <h2>
+          <button
+            id="shipping"
+            aria-expanded="true"
+            aria-controls="shipping-panel"
+            data-accordion-trigger
+          >
+            Shipping
+          </button>
+        </h2>
+        <div id="shipping-panel" role="region" aria-labelledby="shipping">
+          Shipping panel
+        </div>
+        <h2>
+          <button
+            id="returns"
+            aria-expanded="false"
+            aria-controls="returns-panel"
+            data-accordion-trigger
+          >
+            Returns
+          </button>
+        </h2>
+        <div id="returns-panel" role="region" aria-labelledby="returns" hidden>
+          Returns panel
+          <a href="/returns-policy">returns link</a>
+        </div>
+        <h2>
+          <button
+            id="payment"
+            aria-expanded="false"
+            aria-controls="payment-panel"
+            data-accordion-trigger
+          >
+            Payment
+          </button>
+        </h2>
+        <div id="payment-panel" role="region" aria-labelledby="payment" hidden>
+          Payment panel
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
