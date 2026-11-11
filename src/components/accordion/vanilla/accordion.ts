@@ -16,17 +16,17 @@ class AccordionSection {
     }
     this.panelEl = panelEl;
     this.open = this.buttonEl.getAttribute('aria-expanded') === 'true';
-    this.buttonEl.addEventListener('click', () => this.toggle(!this.open));
+    this.buttonEl.addEventListener('click', () => this.setOpen(!this.open));
   }
 
-  toggle(open: boolean) {
-    if (this.open === open) {
+  setOpen(nextOpen: boolean) {
+    if (this.open === nextOpen) {
       return;
     }
 
-    this.open = open;
-    this.buttonEl.setAttribute('aria-expanded', String(open));
-    this.panelEl.hidden = !open;
+    this.open = nextOpen;
+    this.buttonEl.setAttribute('aria-expanded', String(nextOpen));
+    this.panelEl.hidden = !nextOpen;
   }
 }
 
